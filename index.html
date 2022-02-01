@@ -31,10 +31,18 @@
   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
+
+    
+    
+    function commands(value) {
+      console.log(value);
+    }    
+
     // load socket.io-client
     var socket = io();
     
     // on nick form submit, save nickname
+
     $('#nickname-form').submit(function(){
     
       // save nick in session & greet
@@ -57,10 +65,11 @@
       $('#messages').append($('<li>').text(nick + ': ' + $('#message').val()));
       socket.emit('message', nick + ': ' + $('#message').val());
       $('#message').val('');
+      commands($('#message').val(''));
       
       return false;
     });
-    
+     
     // on msg received, append to list
     socket.on('message', function(msg){
     $('#messages').append($('<li>').text(msg));
