@@ -3,10 +3,37 @@ var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
+const request = require('request');
+const axios = require('axios');
+const apiKey = "d27c6a10c5107fa135a3ffbba98b99d5";
+
+
+
 
 // server route handler
 app.get('/', function(req, res){
-  res.sendFile(__dirname + '/index.html');
+   res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/getByZip/:zipcode', (req, res) => {
+
+  const zip_code = req.params.zipcode;
+  // Make a request for a user with a given ID
+
+  let url = `https://api.openweathermap.org/data/2.5/weather?zip=${zip_code},us&appid=${apiKey}`;
+
+
+  // request data
+  request(url, (err, response, body) => {
+
+    if (err) {
+      console.log("Error, data cannot be acquired");
+    } else {
+      let weatherData = JSON.stringify( body );
+      res.send( weatherData );
+    }
+  });
+
 });
 
 // connect to mongodb
@@ -53,6 +80,6 @@ io.on('connection', function(socket){
 });
 
 // start server
-http.listen(5500, function(){
-  console.log('Server up on *:5500');
+http.listen(3000, function(){
+  console.log('Server up on *:3000');
 });
