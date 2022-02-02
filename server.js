@@ -4,7 +4,6 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var mongoose = require('mongoose');
 const request = require('request');
-const axios = require('axios');
 const apiKey = "d27c6a10c5107fa135a3ffbba98b99d5";
 
 

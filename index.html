@@ -70,22 +70,45 @@
     function checkInput( str ) {
       
       let inputs = (str.trim()).split(' ');
+      console.log("in: " + inputs[0])
 
       if (inputs[0] === '!weather') {
-        let zipcode = input[1];
-        getWeatherByZip( zipcode );
+        console.log("valid")
+        let zipcode = parseInt(inputs[1]);
+
+        if(Number.isInteger(zipcode) && inputs[1].length === 5){
+          console.log("zipcode")
+          getWeatherByZip( inputs[1] );
+        } else {
+          console.log("not zipcode")
+          
+          // append and emit message
+          // $('#messages').append($('<li>').text('Error: Not a Valid Zipcode'));
+          //   $('#messages li').last().css("color", "red");
+          // socket.emit('message', 'Error: Not a Valid Zipcode');
+      
+
+          // Erasing our text
+          // $('#message').val('');
+        }
+        
       }
     }
     
     // weather call
-    function getWeatherByZip( zip_code ) {
+    function getWeatherByZip( zip ) {
+
+      console.log(zip)
   
       // Make a request for a user with a given ID
-      axios.get(`/getByZip/${zip_code}`)
+      axios.get(`http://localhost:3000/getByZip/${zip_code}`)
         .then(function (response) {
           // handle success
+          console.log("response");
           console.log(response);
           let weatherData = JSON.parse( response );
+          console.log("Weatherdata")
+          console.log(weatherData)
         })
         .catch(function (error) {
           // handle error
@@ -103,25 +126,33 @@
       $("#greeting").html('Welcome' + ' ' + $('#nickname').val() + '!');
       $('#nick').val('');
       //$("#send").prop("disabled",false);
-      
+    
       return false;
     });
     
     // on chat form submit, send msg to server
     $('#chat-form').submit(function(){
-      
+
       // get nickname from session storage
       var nick = sessionStorage.getItem("nickname");
-      
+        
       // append and emit message
       $('#messages').append($('<li>').text(nick + ': ' + $('#message').val()));
         $('#messages li').last().css("color", "blue");
       socket.emit('message', nick + ': ' + $('#message').val());
-      
-      commands(document.getElementById("message").value);
+
+
+      // Checking our text
+      checkInput(document.getElementById("message").value);
+
+      // Erasing our text
       $('#message').val('');
+
+      // Button Disable if empty
       $("#send").prop("disabled",true);
-      window.scrollTo(0,document.querySelector(".message-container").scrollHeight);
+
+      // Scroll to bottom of the page
+      document.getElementById('messages').scrollTo(0,document.getElementById("messages").scrollHeight);
       return false;
     });
     
