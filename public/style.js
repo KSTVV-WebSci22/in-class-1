@@ -6,7 +6,7 @@ $(document).ready(function(){
     $("#select" ).click(function() {
         sessionStorage.setItem("nickname", $('#nickname').val());
         $("#login").hide();
-        $("#chat").show();
+        $('#chat').css('display', 'flex');
     });
     
     var nick = sessionStorage.getItem("nickname");
