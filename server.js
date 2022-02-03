@@ -1,5 +1,7 @@
 // server init + mods
-var app = require('express')();
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const { default: axios } = require('axios');
