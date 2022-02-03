@@ -96,6 +96,8 @@ body {
     top: 20vh;
     left: 40vh;
     display: none;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
 }
 
 
@@ -129,18 +131,29 @@ body {
     width: 300px !important;
     height: 600px;
     background-color: var(--background);
-    border: var(--aol-blue) 4px solid;
     position: absolute;
     top: 20vh;
     left: 40vh;
+    border-top-right-radius: 25px;
+    border-top-left-radius: 25px;
 }
 
 #loginheader, #chatheader {
     width: 100%;
     height: 30px;
-    background-color: var(--aol-blue);
     z-index: 3;
     /* position: absolute; */
+}
+
+#chatheader img {
+    width: 600px;
+}
+
+.top-bar {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
 }
 
 #logo {
