@@ -2,6 +2,7 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+const { default: axios } = require('axios');
 var mongoose = require('mongoose');
 const request = require('request');
 const apiKey = "d27c6a10c5107fa135a3ffbba98b99d5";
@@ -19,20 +20,16 @@ app.get('/getByZip/:zipcode', (req, res) => {
   const zip_code = req.params.zipcode;
   // Make a request for a user with a given ID
 
-  let url = `https://api.openweathermap.org/data/2.5/weather?zip=${zip_code},us&appid=${apiKey}`;
+  let url = `https://api.openweathermap.org/data/2.5/weather?zip=${zip_code}&units=imperial&appid=${apiKey}`;
 
-
-  // request data
-  request(url, (err, response, body) => {
-
-    if (err) {
-      console.log("Error, data cannot be acquired");
-    } else {
-      let weatherData = JSON.stringify( body );
-      res.send( weatherData );
-    }
-  });
-
+  axios.get(url)
+    .then(e => {
+      // console.log(e.data)
+      res.send(e.data)
+    })
+    .catch(err =>{
+      console.log(err)
+    })
 });
 
 // connect to mongodb
