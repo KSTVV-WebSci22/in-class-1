@@ -15,8 +15,7 @@ $(document).ready(function(){
         var dialing = document.getElementById("dialing");
         dialing.play();
         var buddyin = document.getElementById("buddy-in");
-        var message = document.getElementById("message");
-
+        
         setTimeout(() => {
            $("#dial-status").html("Dialing 555-867-5309")
         }, 2000);
@@ -106,7 +105,8 @@ function checkInput( str ) {
         socket.emit('message', nick + ': ' + $('#message').val());
 
         // Message Sound
-        message.play();
+        var message_audio = document.getElementById("message-audio");
+        message_audio.play();
 
 
         // Checking our text
