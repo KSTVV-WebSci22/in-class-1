@@ -1,14 +1,21 @@
 // server init + mods
-var app = require('express')();
+const express = require('express');
+const app = express();
+app.use(express.static('public'));
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 const { default: axios } = require('axios');
 var mongoose = require('mongoose');
-const request = require('request');
 const apiKey = "d27c6a10c5107fa135a3ffbba98b99d5";
+const cors = require('cors')  
 
-
-
+app.use(cors({
+  origin: ['http://localhost:3000'],
+  methods: [
+      "GET"
+  ],
+  credentials: true
+}));
 
 // server route handler
 app.get('/', function(req, res){
@@ -42,6 +49,7 @@ var chatMessage = new mongoose.Schema({
   username: String,
   message: String
 });
+
 var Message = mongoose.model('Message', chatMessage);
 
 // user connected even handler
@@ -69,7 +77,7 @@ io.on('connection', function(socket){
     });
     message.save(function (err, saved) {
       if (err) {
-	return console.log('error saving to db');
+	      return console.log('error saving to db');
       }
     })
   });
