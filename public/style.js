@@ -37,7 +37,7 @@ $(document).ready(function(){
             $('#chat').css('display', 'flex');
             dialing.pause()
             buddyin.play()
-        }, 26000);
+        }, 27000);
     });
     
     var nick = sessionStorage.getItem("nickname");
